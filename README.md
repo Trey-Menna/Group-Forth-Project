@@ -18,3 +18,12 @@ Group Forth in C Project
 - Do boy will work on:  
 - Repository link: 
 - Predicted Timeline: 1-2 weeks to finish the initial focus and start working on support for condintnals and functions
+
+# How to run with terminal
+- navigate to Group-Forth-Project folder
+- cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
+- cmake --build build
+- Navigate to build/bin folder in project directory
+- ./main
+
+
