@@ -1,5 +1,5 @@
 add_executable(
-    main
-    main.c
+    mainF
+    mainF.c
     token.c
 )
