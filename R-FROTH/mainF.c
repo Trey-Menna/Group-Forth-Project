@@ -1,34 +1,9 @@
 #include "token.h"
+#include "token_stack.h"
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-
-// Define stack structure
-#define STACK_SIZE 100
-int stack[STACK_SIZE];
-int stack_pointer = 0;
-
-// Function to push a value onto the stack
-void push(int value) {
-    if (stack_pointer < STACK_SIZE) {
-        stack[stack_pointer++] = value;
-    } else {
-        printf("Error: Stack overflow\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
-// Function to pop a value from the stack
-int pop() {
-    if (stack_pointer > 0) {
-        return stack[--stack_pointer];
-    } else {
-        printf("Error: Stack underflow\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
 
 // Maximum number of variables
 #define MAX_VARIABLES 100
@@ -57,19 +32,22 @@ int find_variable(const char* name) {
 
 // Function to execute a conditional operation token
 void execute_conditional_token(token_t *token) {
+    print_stack();
     if (token->type == OPERATOR) {
         // Handle comparison operators
         // For simplicity, let's assume we only support "<" for now
         if (strcmp(token->text, "<") == 0) {
-            int operand2 = pop();
-            int operand1 = pop();
-            push(operand1 < operand2); // Push true (1) or false (0) based on comparison result
+            int operand2 = atoi(pop_token()->text); // Retrieve the value from token_t
+            int operand1 = atoi(pop_token()->text); // Retrieve the value from token_t
+            push_token(create_token(NUMBER, (operand1 < operand2) ? "1" : "0")); // Push true (1) or false (0) based on comparison result
         }
     } else if (token->type == SYMBOL) {
         // Handle conditional branching tokens (IF, ELSE, THEN)
         // For simplicity, let's skip implementation for now
     }
 }
+
+
 
 int main() {
     char input[1024];  // Assuming a maximum input length of 1024 characters
