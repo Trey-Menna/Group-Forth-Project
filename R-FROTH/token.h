@@ -10,6 +10,7 @@ typedef enum {
     SYMBOL,
     WORD,
     VARIABLE,
+    COMPARISON,
     CONSTANT
 } token_type_t;
 

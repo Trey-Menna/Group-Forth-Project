@@ -1,6 +1,6 @@
 add_executable(
-    mainF
-    mainF.c
+    forth
+    forth.c
     token.c
     token_stack.c
 )
