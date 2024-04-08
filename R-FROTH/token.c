@@ -1,5 +1,4 @@
 // token.c
-
 #include "token.h"
 #include <stdlib.h>
 #include <string.h>
@@ -12,12 +11,19 @@ token_t* create_token(token_type_t type, const char *text) {
     }
 
     token->type = type;
-    token->text = strdup(text);
+    token->text = (char *)malloc(strlen(text) + 1); // Allocate memory for token text
+    if (token->text == NULL) {
+        // Handle memory allocation failure
+        free(token); // Free token memory before exiting
+        exit(EXIT_FAILURE);
+    }
+    strcpy(token->text, text); // Copy text into allocated memory
 
     return token;
 }
 
 void free_token(token_t *token) {
-    free(token->text);
-    free(token);
+    free(token->text); // Free text memory
+    free(token);       // Free token memory
 }
+

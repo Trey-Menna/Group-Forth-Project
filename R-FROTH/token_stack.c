@@ -12,12 +12,14 @@ int stack_pointer = 0;
 // Function to push a token onto the stack
 void push_token(token_t* token) {
     if (stack_pointer < STACK_SIZE) {
-        token_stack[stack_pointer++] = token;
+        token_t* new_token = create_token(token->type, token->text);
+        token_stack[stack_pointer++] = new_token;
     } else {
         printf("Error: Stack overflow\n");
         exit(EXIT_FAILURE);
     }
 }
+
 
 // Function to pop a token from the stack
 token_t* pop_token() {
@@ -38,6 +40,16 @@ void print_stack() {
     printf(" <- top\n");
 }
 
+// Function to get the entire stack
+token_t** get_stack() {
+    return token_stack;
+}
+
+// Function to get the current stack pointer
+int get_stack_pointer() {
+    return stack_pointer;
+}
+
 // Function to execute arithmetic operation tokens
 void executeOperator(token_t* token) {
     // Ensure the stack has at least two operands
@@ -56,26 +68,31 @@ void executeOperator(token_t* token) {
         exit(EXIT_FAILURE);
     }
 
-    // Convert operand tokens to integers
+    /* Convert operand tokens to integers
     int operand2 = atoi(operand_token2->text);
     int operand1 = atoi(operand_token1->text);
-    printf("operand1: %d, operand2: %d\n", operand1, operand2);
+    */
+    
+    // Print the tokens for debugging
+    printf("operand1: %s, operand2: %s\n", operand_token1->text, operand_token2->text);
+
 
     // Perform the appropriate arithmetic operation based on the operator token
     int result;
     if (strcmp(token->text, "+") == 0) {
-        result = operand1 + operand2;
+        result = atoi(operand_token1->text) + atoi(operand_token2->text);
     } else if (strcmp(token->text, "-") == 0) {
-        result = operand1 - operand2;
+        result = atoi(operand_token1->text) - atoi(operand_token2->text);
     } else if (strcmp(token->text, "*") == 0) {
-        result = operand1 * operand2;
+        result = atoi(operand_token1->text) * atoi(operand_token2->text);
     } else if (strcmp(token->text, "/") == 0) {
         // Check for division by zero
+        int operand2 = atoi(operand_token2->text);
         if (operand2 == 0) {
             printf("Error: Division by zero\n");
             exit(EXIT_FAILURE);
         }
-        result = operand1 / operand2;
+        result = atoi(operand_token1->text) / operand2;
     } else {
         // If the operator is not recognized, print an error message
         printf("Error: Unsupported operator\n");
@@ -88,6 +105,9 @@ void executeOperator(token_t* token) {
 
     // Push the result onto the stack
     push_token(create_token(NUMBER, result_str));
+    
+    printf("Printing Stack from token_stack after executing operator: ");
+    print_stack();
 }
 
 

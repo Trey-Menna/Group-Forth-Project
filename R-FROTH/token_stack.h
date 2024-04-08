@@ -19,4 +19,8 @@ void executeComparison(token_t* token);
 
 void print_stack();
 
+token_t** get_stack();
+
+int get_stack_pointer();
+
 #endif  // TOKEN_STACK_H
