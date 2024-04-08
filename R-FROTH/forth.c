@@ -59,6 +59,14 @@ int main() {
     printf("Enter R-FORTH program:\n");
     fgets(input, sizeof(input), stdin);
 
+    //***Ignore the enter the user will use to submit the line of code
+    // Remove the newline character if it exists
+    char *newline = strchr(input, '\n');
+    if (newline != NULL) {
+        *newline = '\0';
+    }
+
+
     // Tokenize the input
      char *token_str = strtok(input, " ");
     while (token_str != NULL) {
