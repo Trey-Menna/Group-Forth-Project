@@ -3,7 +3,6 @@ Group Forth in C Project
 
 # Intendid suport
 - Add support for variables and constants.
-- Add support for conditions (boolean expressions)
 - Add support for conditionals (e.g. if-else) and loops
 - Add support for functions
 - Add support for the "REPL" of FORTH

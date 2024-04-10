@@ -45,7 +45,7 @@ void executeToken(token_t *token){
         executeComparison(token);
     } else {
         // Display the tokens not executed (for now)
-        printf("Token not executed Type: %d, Text: %s\n", token->type, token->text);
+        //printf("Token not executed Type: %d, Text: %s\n", token->type, token->text);
     }
 }
 
@@ -69,7 +69,7 @@ int main() {
 
     // Tokenize the input
      char *token_str = strtok(input, " ");
-    while (token_str != NULL) {
+     while (token_str != NULL) {
 
         // Create token
         token_t *new_token = create_token(WORD, token_str);
@@ -77,10 +77,10 @@ int main() {
          // Classify each token based on basic checks
         token_type_t type;
         classify_token(new_token);
-        printf("\nToken being pushed to stack: %s , Type: %d", new_token->text , new_token->type);
+        //printf("\nToken being pushed to stack: %s , Type: %d", new_token->text , new_token->type);
         push_token(new_token);
-        printf("\nStack after a new token is pushed:  ");
-        print_stack();
+        //printf("\nStack after a new token is pushed:  ");
+        //print_stack();
 
         // Free memory allocated for the token
         free_token(new_token);
@@ -97,7 +97,7 @@ int main() {
     for (int i = 0; i < stack_pointer; i++) {
         executeToken(stack[i]);
     }
-    printf("Printing Stack from main after execute");
+    //printf("Printing Stack from main after execute");
     print_stack();
 
     return 0;

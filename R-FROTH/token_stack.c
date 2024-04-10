@@ -75,7 +75,7 @@ void executeOperator(token_t* token) {
     */
     
     // Print the tokens for debugging
-    printf("operand1: %s, operand2: %s\n", operand_token1->text, operand_token2->text);
+    //printf("operand1: %s, operand2: %s\n", operand_token1->text, operand_token2->text);
 
 
     // Perform the appropriate arithmetic operation based on the operator token
@@ -107,8 +107,8 @@ void executeOperator(token_t* token) {
     // Push the result onto the stack
     push_token(create_token(NUMBER, result_str));
     
-    printf("Printing Stack from token_stack after executing operator: ");
-    print_stack();
+    //printf("Printing Stack from token_stack after executing operator: ");
+    //print_stack();
 }
 
 
@@ -130,8 +130,10 @@ void executeComparison(token_t* token) {
         int operand2 = atoi(pop_token()->text); // Retrieve the value from token_t
         push_token(create_token(NUMBER, (operand1 > operand2) ? "1" : "0"));
     } else if (strcmp(token->text, "<=") == 0) {
+        // Retrieve operands from the stack
         int operand2 = atoi(pop_token()->text);
         int operand1 = atoi(pop_token()->text);
+        // Perform the logical AND operation and push the result onto the stack
         push_token(create_token(NUMBER, (operand1 <= operand2) ? "1" : "0"));
     } else if (strcmp(token->text, ">=") == 0) {
         int operand1 = atoi(pop_token()->text);
@@ -145,13 +147,33 @@ void executeComparison(token_t* token) {
         int operand2 = atoi(pop_token()->text);
         int operand1 = atoi(pop_token()->text);
         push_token(create_token(NUMBER, (operand1 != operand2) ? "1" : "0"));
-    } else {
+    } else if (strcmp(token->text, "&&") == 0) {
+        int operand2 = atoi(pop_token()->text);
+        int operand1 = atoi(pop_token()->text);
+        push_token(create_token(NUMBER, (operand1 && operand2) ? "1" : "0"));
+    } else if (strcmp(token->text, "||") == 0) {
+        int operand2 = atoi(pop_token()->text);
+        int operand1 = atoi(pop_token()->text);
+        push_token(create_token(NUMBER, (operand1 || operand2) ? "1" : "0"));
+    }else {
         printf("Error: Unsupported operator\n");
        
     }
 }
 
 
-void executeSymbol(){
+void executeconditionals(){
         // Handle conditional branching tokens (IF, ELSE, THEN)
+}
+
+void createVariable(){
+        // Add support for variables and constants.
+}
+
+void createFunction(){
+        //Add support for functions
+}
+
+void forthREPL(){
+        //Add support for the "REPL" of FORTH
 }
