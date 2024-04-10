@@ -120,6 +120,7 @@ void executeOperator(token_t* token) {
 // Function to execute comparison tokens
 void executeComparison(token_t* token) {
     // Handle comparison operators
+    token_t* pop_operator = pop_token();
     if (strcmp(token->text, "<") == 0) {
         int operand2 = atoi(pop_token()->text); // Retrieve the value from token_t
         int operand1 = atoi(pop_token()->text); // Retrieve the value from token_t
