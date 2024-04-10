@@ -59,8 +59,9 @@ void executeOperator(token_t* token) {
     }
 
     // Retrieve operands from the stack
-    token_t* operand_token2 = pop_token();
+    token_t* pop_operator = pop_token();
     token_t* operand_token1 = pop_token();
+    token_t* operand_token2 = pop_token();
 
     // Check if the popped tokens are valid
     if (operand_token1 == NULL || operand_token2 == NULL) {
