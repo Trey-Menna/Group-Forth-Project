@@ -221,8 +221,8 @@ void executeForth(token_t* token) {
 }
 
 
-
-void executeconditionals(token_t* token){
+//To Do
+void executeConditionals(token_t* token){
     // Handle conditional branching tokens (IF, ELSE, THEN)
     token_t* pop_operator = pop_token();
     if (strcmp(token->text, "IF") == 0) {
@@ -238,12 +238,13 @@ void executeconditionals(token_t* token){
     }
 }
 
+//To Do
 void createVariable(token_t* token){
     // Add support for variables and constants.
     token_t* pop_operator = pop_token();
     if (strcmp(token->text, "VAR") == 0) {
-        int operand2 = atoi(pop_token()->text); // Retrieve the value for var name
-        int operand1 = atoi(pop_token()->text); // Retrieve the value for var value
+        int operand2 = atoi(pop_token()->text); // Retrieve the value for var value
+        int operand1 = atoi(pop_token()->text); // Retrieve the value for var name
         // Create and Store variable for later use
     } else if (strcmp(token->text, "CONST") == 0) {
         //CONSTANT
@@ -252,10 +253,12 @@ void createVariable(token_t* token){
     }
 }
 
+//To Do
 void createFunction(){
         //Add support for functions
 }
 
+//To Do
 void forthREPL(){
         //Add support for the "REPL" of FORTH
 }
