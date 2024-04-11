@@ -20,7 +20,6 @@ void push_token(token_t* token) {
     }
 }
 
-
 // Function to pop a token from the stack
 token_t* pop_token() {
     if (stack_pointer > 0) {
@@ -73,10 +72,8 @@ void executeOperator(token_t* token) {
     int operand2 = atoi(operand_token2->text);
     int operand1 = atoi(operand_token1->text);
     */
-    
     // Print the tokens for debugging
     //printf("operand1: %s, operand2: %s\n", operand_token1->text, operand_token2->text);
-
 
     // Perform the appropriate arithmetic operation based on the operator token
     int result;
@@ -103,19 +100,11 @@ void executeOperator(token_t* token) {
     // Convert the result to a string using sprintf
     char result_str[20]; // Assuming a maximum of 20 characters for the result
     sprintf(result_str, "%d", result);
-
     // Push the result onto the stack
     push_token(create_token(NUMBER, result_str));
-    
     //printf("Printing Stack from token_stack after executing operator: ");
     //print_stack();
 }
-
-
-
-
-
-
 
 // Function to execute comparison tokens
 void executeComparison(token_t* token) {
@@ -157,17 +146,110 @@ void executeComparison(token_t* token) {
         push_token(create_token(NUMBER, (operand1 || operand2) ? "1" : "0"));
     }else {
         printf("Error: Unsupported operator\n");
-       
+    }
+}
+
+void executeForth(token_t* token) {
+    //SWAP, DUP, OVER, ROT, DROP, 2SWAP, 2DUP, 2OVER, and 2DROP
+    token_t* pop_keyword = pop_token();
+    if (strcmp(token->text, "SWAP") == 0) {
+        // SWAP the top two elements on the stack
+        token_t* temp = pop_token();
+        token_t* top = pop_token();
+        push_token(temp);
+        push_token(top);
+    } else if (strcmp(token->text, "DUP") == 0) {
+        // Duplicate the top element on the stack
+        token_t* top = pop_token();
+        push_token(top);
+        push_token(create_token(top->type, top->text));
+    } else if (strcmp(token->text, "OVER") == 0) {
+        // Copy the second element from the top onto the top of the stack
+        token_t* second = pop_token();
+        token_t* top = pop_token();
+        push_token(top);
+        push_token(second);
+        push_token(create_token(second->type, second->text));
+    } else if (strcmp(token->text, "ROT") == 0) {
+        // Rotate the top three elements on the stack
+        token_t* temp1 = pop_token();
+        token_t* temp2 = pop_token();
+        token_t* top = pop_token();
+        push_token(temp1);
+        push_token(temp2);
+        push_token(top);
+    } else if (strcmp(token->text, "DROP") == 0) {
+        // Remove the top element from the stack
+        pop_token(); // Simply pop the top element
+    } else if (strcmp(token->text, "2SWAP") == 0) {
+        // Swap the top two pairs of stack items
+        token_t* temp1 = pop_token();
+        token_t* temp2 = pop_token();
+        token_t* top1 = pop_token();
+        token_t* top2 = pop_token();
+        push_token(temp2);
+        push_token(temp1);
+        push_token(top2);
+        push_token(top1);
+    } else if (strcmp(token->text, "2DUP") == 0) {
+        // Duplicate the top two pairs of stack items
+        token_t* top1 = pop_token();
+        token_t* top2 = pop_token();
+        push_token(top2);
+        push_token(top1);
+        push_token(create_token(top2->type, top2->text));
+        push_token(create_token(top1->type, top1->text));
+    } else if (strcmp(token->text, "2OVER") == 0) {
+        // Copy the second pair from the top onto the top of the stack
+        token_t* second1 = pop_token();
+        token_t* second2 = pop_token();
+        token_t* top1 = pop_token();
+        token_t* top2 = pop_token();
+        push_token(top2);
+        push_token(top1);
+        push_token(second2);
+        push_token(second1);
+        push_token(create_token(second2->type, second2->text));
+        push_token(create_token(second1->type, second1->text));
+    } else if (strcmp(token->text, "2DROP") == 0) {
+        // Remove the top two pairs from the stack
+        pop_token();
+        pop_token();
+    } else {
+        printf("Error: Unsupported Forth keyword\n");
     }
 }
 
 
-void executeconditionals(){
-        // Handle conditional branching tokens (IF, ELSE, THEN)
+
+void executeconditionals(token_t* token){
+    // Handle conditional branching tokens (IF, ELSE, THEN)
+    token_t* pop_operator = pop_token();
+    if (strcmp(token->text, "IF") == 0) {
+        int operand2 = atoi(pop_token()->text);
+        int operand1 = atoi(pop_token()->text); 
+        // execute conditonal
+    } else if (strcmp(token->text, "ELSE") == 0) {
+        //ELSE
+    } else if (strcmp(token->text, "THEN") == 0) {
+        //THEN
+    }else{
+        printf("Error: Unsupported Conditional\n");
+    }
 }
 
-void createVariable(){
-        // Add support for variables and constants.
+void createVariable(token_t* token){
+    // Add support for variables and constants.
+    token_t* pop_operator = pop_token();
+    if (strcmp(token->text, "VAR") == 0) {
+        int operand2 = atoi(pop_token()->text); // Retrieve the value for var name
+        int operand1 = atoi(pop_token()->text); // Retrieve the value for var value
+        // Create and Store variable for later use
+    } else if (strcmp(token->text, "CONST") == 0) {
+        //CONSTANT
+    } else{
+        printf("Error: Unsupported Variable\n");
+    }
 }
 
 void createFunction(){

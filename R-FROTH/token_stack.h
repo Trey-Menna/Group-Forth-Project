@@ -17,6 +17,9 @@ void executeOperator(token_t* token);
 //// Function to execute comparison tokens
 void executeComparison(token_t* token);
 
+// Function to execute forth keywords
+void executeForth(token_t* token);
+
 void print_stack();
 
 token_t** get_stack();
