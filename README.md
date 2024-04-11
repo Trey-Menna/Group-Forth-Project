@@ -23,6 +23,6 @@ Group Forth in C Project
 - cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
 - cmake --build build
 - Navigate to build/bin folder in project directory
-- ./main
+- ./forth or ./main
 
 
