@@ -13,7 +13,10 @@ TokenType get_token_type(const char *word) {
         return TYPE_SYMBOL;
     } else if (strcmp(word, "variable") == 0) {
         return TYPE_VARIABLE;  //recognizing 'variable' as a special word for defining variables.
-    } else {
+    } else if (strcmp(word, "help") == 0) {
+        return TYPE_HELP; // addition of 'help' keyword
+    }
+    else {
         return TYPE_WORD;
     }
 }
