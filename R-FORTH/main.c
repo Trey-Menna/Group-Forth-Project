@@ -34,6 +34,15 @@ int main() {
                     printf("Variable %s set to %d\n", word, getVariableValue(word));
                 }
                 break;
+            case TYPE_HELP:
+                printf("Available commands:\n");
+                printf("  number <value> - Enter a number\n");
+                printf("  operator <+|-|*|/> - Enter an operator\n");
+                printf("  symbol <:|;> - Enter a symbol\n");
+                printf("  variable <name> - Define a variable with a name and then set its value\n");
+                printf("  word <name> - Enter a word\n");
+                printf("  help - Display this help message\n");
+                break;
             case TYPE_WORD:      printf("Word: %s\n", token.text); break;
             default:             printf("Unknown: %s\n", token.text); break;
         }

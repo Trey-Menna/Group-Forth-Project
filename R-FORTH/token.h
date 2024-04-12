@@ -12,6 +12,7 @@ typedef enum {
     TYPE_SYMBOL,
     TYPE_WORD,
     TYPE_VARIABLE,  //added type for variables
+    TYPE_HELP,
     TYPE_UNKNOWN,
     TYPE_END
 } TokenType;
