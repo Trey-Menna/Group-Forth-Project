@@ -12,16 +12,25 @@ void classify_token(token_t *token) {
     } else if (strcmp(token->text, "+") == 0 || strcmp(token->text, "-") == 0 ||
                strcmp(token->text, "*") == 0 || strcmp(token->text, "/") == 0) {
         token->type = WORD;
-    } else if (strcmp(token->text, "CONSTANT") == 0) {
+    } else if (strcmp(token->text, "CONST") == 0) {
         token->type = CONSTANT;
-    } else if (strcmp(token->text, "VARIABLE") == 0) {
+    } else if (strcmp(token->text, "VAR") == 0) {
         token->type = VARIABLE;
-    } else if (strcmp(token->text, ":") == 0 || strcmp(token->text, ";") == 0) {
+    } else if (strcmp(token->text, ".") == 0 || strcmp(token->text, "wq") == 0) {
         token->type = SYMBOL;
     } else if (strcmp(token->text, ">=") == 0 || strcmp(token->text, "<=") == 0 ||
                strcmp(token->text, "==") == 0 || strcmp(token->text, "!=") == 0 ||
                strcmp(token->text, ">") == 0 || strcmp(token->text, "<") == 0) {
         token->type = COMPARISON;
+    } else if (strcmp(token->text, "SWAP") == 0 || strcmp(token->text, "DUP") == 0 ||
+               strcmp(token->text, "OVER") == 0 || strcmp(token->text,"ROT") == 0 ||
+               strcmp(token->text, "DROP") == 0 || strcmp(token->text, "2SWAP") == 0 ||
+               strcmp(token->text, "2DUP") == 0 || strcmp(token->text, "2OVER") == 0 || strcmp(token->text, "2DROP") == 0 ) {
+    token->type = FORTH;
+    } else if (strcmp(token->text, "IF") == 0 || strcmp(token->text, "ELSE") == 0 ||
+               strcmp(token->text, "Then") == 0 || strcmp(token->text, ":") == 0 ||
+               strcmp(token->text, "(") == 0 || strcmp(token->text, ")") == 0  || strcmp(token->text, ";") == 0) {
+        token->type = CONDITIONAL;
     } else {
         token->type = WORD; // Assume everything else is a word
     }
@@ -43,6 +52,10 @@ void executeToken(token_t *token){
     } else if (token->type == COMPARISON){
         // Handle comparison tokens
         executeComparison(token);
+    } else if (token->type == FORTH){
+        executeForth(token);
+    } else if (token -> type == VARIABLE){
+        createVariable(token);
     } else {
         // Display the tokens not executed (for now)
         //printf("Token not executed Type: %d, Text: %s\n", token->type, token->text);

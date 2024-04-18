@@ -9,6 +9,22 @@
 token_t* token_stack[STACK_SIZE];
 int stack_pointer = 0;
 
+#define VAR_STACK_SIZE 100
+token_t* var_token_stack[VAR_STACK_SIZE];
+int var_stack_pointer = 0;
+
+
+// Function to push a var_token onto the stack
+void push_var_token(token_t* token) {
+    if (var_stack_pointer < VAR_STACK_SIZE) {
+        token_t* new_token = create_token(token->type, token->text);
+        var_token_stack[var_stack_pointer++] = new_token;
+    } else {
+        printf("Error: Stack overflow\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 // Function to push a token onto the stack
 void push_token(token_t* token) {
     if (stack_pointer < STACK_SIZE) {
@@ -67,13 +83,6 @@ void executeOperator(token_t* token) {
         printf("Error: Invalid tokens on the stack\n");
         exit(EXIT_FAILURE);
     }
-
-    /* Convert operand tokens to integers
-    int operand2 = atoi(operand_token2->text);
-    int operand1 = atoi(operand_token1->text);
-    */
-    // Print the tokens for debugging
-    //printf("operand1: %s, operand2: %s\n", operand_token1->text, operand_token2->text);
 
     // Perform the appropriate arithmetic operation based on the operator token
     int result;
@@ -221,7 +230,7 @@ void executeForth(token_t* token) {
 }
 
 
-//To Do
+
 void executeConditionals(token_t* token){
     // Handle conditional branching tokens (IF, ELSE, THEN)
     token_t* pop_operator = pop_token();
@@ -238,27 +247,64 @@ void executeConditionals(token_t* token){
     }
 }
 
-//To Do
-void createVariable(token_t* token){
+void createVariable(token_t* token) {
     // Add support for variables and constants.
-    token_t* pop_operator = pop_token();
     if (strcmp(token->text, "VAR") == 0) {
-        int operand2 = atoi(pop_token()->text); // Retrieve the value for var value
-        int operand1 = atoi(pop_token()->text); // Retrieve the value for var name
+        // Retrieve the value for var value
+        token_t* value_token = pop_token();
+        if (value_token == NULL) {
+            printf("Error: Insufficient operands on the stack for variable creation\n");
+            exit(EXIT_FAILURE);
+        }
+        int value = atoi(value_token->text);
+
+        // Retrieve the value for var name
+        token_t* name_token = pop_token();
+        if (name_token == NULL) {
+            printf("Error: Insufficient operands on the stack for variable creation\n");
+            exit(EXIT_FAILURE);
+        }
+
+        token_t* pop_VarKeyword = pop_token();
         // Create and Store variable for later use
+        printf("Creating Var Token: %s with value: %d\n", name_token->text, value);
+        token_t* new_var_token = create_var_token(name_token->text, value);
+        //token_t* new_token = create_token(VARIABLE, name_token->text);
+        printf("Adding Var Token to VarToken stack name: %s and value: %d\n", new_var_token->text, new_var_token->value);
+        push_var_token(new_var_token);
+        //printf("Adding New Token to Stack: %s\n", new_token->text);
+        //push_token(new_token);
+
+        // Free the memory allocated for the tokens
+        free_token(name_token);
+        free_token(value_token);
+        free_token(new_var_token);
+        //free_token(new_token);
     } else if (strcmp(token->text, "CONST") == 0) {
         //CONSTANT
+        // Here you can implement the logic to handle constants if needed
     } else{
         printf("Error: Unsupported Variable\n");
     }
 }
 
-//To Do
+
 void createFunction(){
         //Add support for functions
 }
 
-//To Do
 void forthREPL(){
         //Add support for the "REPL" of FORTH
+}
+
+void executeSymbol(token_t* token){
+    //Add support for custom shortcuts, ex. . to pop stack and wq to quit out forth
+    token_t* pop_operator = pop_token();
+    if (strcmp(token->text, ".") == 0) {
+        pop_token();
+    } else if (strcmp(token->text, "wq") == 0) {
+        //wq to quit 
+    } else{
+        printf("Error: Unsupported Conditional\n");
+    }
 }

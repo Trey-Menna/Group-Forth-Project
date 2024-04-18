@@ -20,10 +20,16 @@ void executeComparison(token_t* token);
 // Function to execute forth keywords
 void executeForth(token_t* token);
 
+//Function to create and add variable to var_token_stack
+void createVariable(token_t* token);
+
+//Function to print current token stack
 void print_stack();
 
+//Function to retrive current token stack
 token_t** get_stack();
 
+//Function to get current token stack's pointer
 int get_stack_pointer();
 
 #endif  // TOKEN_STACK_H

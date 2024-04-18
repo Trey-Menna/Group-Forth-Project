@@ -10,18 +10,25 @@ typedef enum {
     SYMBOL,
     WORD,
     VARIABLE,
+    SETVARIABLE,
     COMPARISON,
-    CONSTANT
+    CONDITIONAL,
+    CONSTANT,
+    FORTH,
+    REPL
 } token_type_t;
 
 // Struct to represent a token
 typedef struct {
     token_type_t type;  // Token class
     char *text;         // Token text
+    int *value;
 } token_t;
 
 // Function to initialize a token
 token_t* create_token(token_type_t type, const char *text);
+
+token_t* create_var_token(const char *text, const int *value);
 
 // Function to free memory allocated for a token
 void free_token(token_t *token);
