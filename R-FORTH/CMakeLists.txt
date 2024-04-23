@@ -3,4 +3,5 @@ add_executable(
     main.c
     token.c
     variable.c
+    error_handling.c
 )
