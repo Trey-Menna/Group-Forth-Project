@@ -11,6 +11,7 @@ typedef enum {
     WORD,
     VARIABLE,
     SETVARIABLE,
+    SETCONST,
     COMPARISON,
     CONDITIONAL,
     CONSTANT,
@@ -30,7 +31,11 @@ token_t* create_token(token_type_t type, const char *text);
 
 token_t* create_var_token(const char *text, const int *value);
 
+token_t* create_const_token(const char *text, const int *value);
+
 // Function to free memory allocated for a token
 void free_token(token_t *token);
+
+void free_var_token(token_t *token);
 
 #endif  // TOKEN_H
