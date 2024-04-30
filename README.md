@@ -1,12 +1,18 @@
 # Group-Forth-Project
 Group Forth in C Project
 
+# How to run with terminal using cmake
+- navigate to Group-Forth-Project folder
+- cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
+- cmake --build build
+- Navigate to build/bin folder in project directory
+- ./forth or ./main
+
 # Intended Support
 - Add support for variables and constants.
 - Add support for conditionals (e.g. if-else) and loops
 - Add support for functions
 - Add support for the "REPL" of FORTH
-
 
 # Group R-forth
 - Group R-forth
@@ -17,12 +23,5 @@ Group Forth in C Project
 - Andrew will work on: Variables
 - Repository link: https://github.com/Trey-Menna/Group-Forth-Project 
 - Predicted Timeline: 1-2 weeks to finish the initial focus and start working on support for conditionals and functions
-
-# How to run with terminal
-- navigate to Group-Forth-Project folder
-- cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
-- cmake --build build
-- Navigate to build/bin folder in project directory
-- ./forth or ./main
 
 
