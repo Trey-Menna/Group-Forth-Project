@@ -20,7 +20,7 @@ Group Forth in C Project
 - Will be implemented in C
 - We will focus on implementing conditions and variables first then work on the other items listed in intended support
 - Trey Will work on: Conditions
-- Andrew will work on: Variables
+- Andrew will work on: Error Handling
 - Repository link: https://github.com/Trey-Menna/Group-Forth-Project 
 - Predicted Timeline: 1-2 weeks to finish the initial focus and start working on support for conditionals and functions
 
