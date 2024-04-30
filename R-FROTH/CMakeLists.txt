@@ -6,6 +6,7 @@ add_executable(
     forth.c
     token.c
     token_stack.c
+    error_handling.c
 )
 
 add_executable(
@@ -13,6 +14,7 @@ add_executable(
     token_stack_tests.cc
     token.c 
     token_stack.c
+    error_handling.c
 )
 
 target_link_libraries(
