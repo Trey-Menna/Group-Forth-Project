@@ -11,7 +11,7 @@ void classify_token(token_t *token) {
                strcmp(token->text, "OVER") == 0 || strcmp(token->text,"ROT") == 0 ||
                strcmp(token->text, "DROP") == 0 || strcmp(token->text, "2SWAP") == 0 ||
                strcmp(token->text, "2DUP") == 0 || strcmp(token->text, "2OVER") == 0 || 
-               strcmp(token->text, "2DROP") == 0 ) {
+               strcmp(token->text, "2DROP") == 0 || strcmp(token->text, "EMIT") == 0 ) {
     token->type = FORTH;
     }
     else if (isdigit(token->text[0]) || (token->text[0] == '-' && isdigit(token->text[1]))) {
@@ -33,7 +33,8 @@ void classify_token(token_t *token) {
                strcmp(token->text, "Then") == 0 || strcmp(token->text, ":") == 0 ||
                strcmp(token->text, "(") == 0 || strcmp(token->text, ")") == 0  || strcmp(token->text, ";") == 0) {
         token->type = CONDITIONAL;
-    } else if (strcmp(token->text, ".") == 0 || strcmp(token->text, "man") == 0) {
+    } else if (strcmp(token->text, ".") == 0 || strcmp(token->text, "man") == 0 
+                || strcmp(token->text, "...") == 0) {
         token->type = SYMBOL;
     } else {
         token->type = WORD; // Assume everything else is a word

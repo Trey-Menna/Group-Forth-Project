@@ -262,7 +262,23 @@ void executeForth(token_t* token) {
         printf("Executing 2DROP");
         pop_token();
         pop_token();
+    } else if (strcmp(token->text, "EMIT") == 0) {
+        token_t* numToASCII = pop_token();
+        // Check if the token is a number
+        if (numToASCII->type == NUMBER) {
+        // Convert the numeric value to an ASCII character
+        printf("Num for conversion: %s\n", numToASCII->text);
+        //Convert token text into an integer
+        int asciiValue = atoi(numToASCII->text);
+        //Convert integer into ASCII
+        char asciiChar = (char)asciiValue;
+        // Print the ASCII character
+        printf("ASCII character: %c\n", asciiChar);
     } else {
+        printf("Error: Token is not a number\n");
+        // Handle error if the token is not a number
+    }
+    }else {
         printf("Error: Unsupported Forth keyword\n");
     }
 }
@@ -387,20 +403,23 @@ void createVariable(token_t* token) {
 }
 
 
-void createFunction(){
-}
-
-
-void forthREPL(){
-        //Add support for the "REPL" of FORTH
-}
+void executeFunction(token_t* token){}
 
 void executeSymbol(token_t* token){
     //Add support for custom shortcuts, ex. . to pop stack and wq to quit out forth
     if (strcmp(token->text, ".") == 0) {
         token_t* pop_operator = pop_token();
         pop_token();
-    }else if (strcmp(token->text, "man") == 0) {
+    }else if (strcmp(token->text, "...") == 0) {
+        token_t* pop_operator = pop_token();
+        //int Stack_pointer = get_stack_pointer();
+        for(int i = 0; i < stack_pointer; i++){
+            pop_token();
+        }
+        stack_pointer = 0;
+
+    }
+    else if (strcmp(token->text, "man") == 0) {
     // Pop tokens
     token_t* checkForForth = pop_token(); //Pop Token for forth
     printf("Popped token: %s\n", checkForForth->text); // Print popped token for debugging
