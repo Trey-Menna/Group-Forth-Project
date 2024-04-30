@@ -15,8 +15,8 @@ typedef enum {
     COMPARISON,
     CONDITIONAL,
     CONSTANT,
+    FUNCTION,
     FORTH,
-    REPL
 } token_type_t;
 
 // Struct to represent a token

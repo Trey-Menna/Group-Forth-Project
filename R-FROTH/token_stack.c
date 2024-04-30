@@ -32,6 +32,8 @@ void executeToken(token_t *token){
         createVariable(token);
     } else if (token -> type == CONSTANT){
         createVariable(token);
+    }else if (token -> type == FUNCTION){
+        executeFunction(token);
     }else {
         // Display the tokens not executed (for now)
         //printf("Token not executed Type: %d, Text: %s\n", token->type, token->text);
@@ -100,6 +102,17 @@ token_t** get_var_stack() {
 // Function to get the current stack pointer
 int get_var_stack_pointer() {
     return var_stack_pointer;
+}
+
+//Function to get the next token given a token
+token_t* getNextToken(token_t* token){
+     // Loop through the stack to find the variables value
+    for(int i = 0; i < stack_pointer; i++) {
+        if (strcmp(token_stack[i]->text, token->text) == 0) {
+            token_t* nextToken = token_stack[i+1];
+            return nextToken;
+        }
+    }
 }
 
 // Function to execute arithmetic operation tokens
@@ -403,7 +416,27 @@ void createVariable(token_t* token) {
 }
 
 
-void executeFunction(token_t* token){}
+void executeFunction(token_t* token) {
+    if (strcmp(token->text, ":") == 0) {
+        // Define a new function
+        token_t* functionName = getNextToken(token); // Get the name of the function
+        printf("Defining function: %s\n", functionName->text);
+
+        // Parse the body of the function until encountering ';'
+        token_t* bodyToken = getNextToken(functionName);
+        while (strcmp(bodyToken->text, ";") != 0) {
+            // Process body tokens here
+            printf("Body token: %s\n", bodyToken->text);
+            //Store Token 
+            bodyToken = getNextToken(bodyToken); // Get the next token
+        }
+        //Pop all used tokens
+        printf("Function definition complete\n");
+    } else {
+        // Execute a function call
+        // Your code for executing function calls goes here
+    }
+}
 
 void executeSymbol(token_t* token){
     //Add support for custom shortcuts, ex. . to pop stack and wq to quit out forth
@@ -434,7 +467,9 @@ void executeSymbol(token_t* token){
         printf("3. Variable Keywords: Variables work by first setting a variable using the 'VAR' keyword. For example, 'VAR pi 12' sets the variable 'pi' with the value '12' in the variable stack.\n");
         printf("4. GET: To retrieve the value of a variable, use the 'GET' keyword. For example, 'GET pi' will push '12' to the stack if you have already inputted 'VAR pi 12'.\n");
         printf("5. Custom symbol: Currently, the '.' symbol is supported to pop the stack.\n");
-        printf("6. Quitting: To quit the program, type and enter 'quit' or 'wq'.\n");
+        printf("6. Custom symbol: Currently, the '...' symbol is supported to pop the whole stack.\n");
+        printf("7. Custom symbol: Currently, 'man forth' is supported to print our manual page.\n");
+        printf("8. Quitting: To quit the program, type and enter 'quit' or 'wq'.\n");
     }
     
     }

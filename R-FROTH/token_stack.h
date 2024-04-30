@@ -23,6 +23,9 @@ void executeSymbol(token_t* token);
 // Function to execute forth keywords
 void executeForth(token_t* token);
 
+// Function to create and execute forth functions
+void executeFunction(token_t* token);
+
 //Function to create and add variable to var_token_stack
 void createVariable(token_t* token);
 
@@ -32,6 +35,9 @@ void print_stack();
 //Function to retrive current token stack
 token_t** get_stack();
 token_t** get_var_stack();
+
+//Function to get the next token given a token
+token_t* getNextToken(token_t* token);
 
 //Function to get current token stack's pointer
 int get_stack_pointer();

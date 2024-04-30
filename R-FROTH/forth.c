@@ -30,13 +30,15 @@ void classify_token(token_t *token) {
                strcmp(token->text, "&&") == 0 || strcmp(token->text, "||") == 0) {
         token->type = COMPARISON;
     } else if (strcmp(token->text, "IF") == 0 || strcmp(token->text, "ELSE") == 0 ||
-               strcmp(token->text, "Then") == 0 || strcmp(token->text, ":") == 0 ||
-               strcmp(token->text, "(") == 0 || strcmp(token->text, ")") == 0  || strcmp(token->text, ";") == 0) {
+               strcmp(token->text, "Then") == 0 || strcmp(token->text, "(") == 0 || 
+               strcmp(token->text, ")") == 0  || strcmp(token->text, ";") == 0) {
         token->type = CONDITIONAL;
     } else if (strcmp(token->text, ".") == 0 || strcmp(token->text, "man") == 0 
                 || strcmp(token->text, "...") == 0) {
         token->type = SYMBOL;
-    } else {
+    } else if (strcmp(token->text, ":") == 0 ) {
+        token->type = FUNCTION;
+    }else {
         token->type = WORD; // Assume everything else is a word
     }
     //printf("Token %s is now Type: %d" , token->text, token->type);
