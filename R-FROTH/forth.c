@@ -33,7 +33,7 @@ void classify_token(token_t *token) {
                strcmp(token->text, "Then") == 0 || strcmp(token->text, ":") == 0 ||
                strcmp(token->text, "(") == 0 || strcmp(token->text, ")") == 0  || strcmp(token->text, ";") == 0) {
         token->type = CONDITIONAL;
-    } else if (strcmp(token->text, ".") == 0) {
+    } else if (strcmp(token->text, ".") == 0 || strcmp(token->text, "man") == 0) {
         token->type = SYMBOL;
     } else {
         token->type = WORD; // Assume everything else is a word
