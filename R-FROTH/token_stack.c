@@ -297,6 +297,18 @@ void executeForth(token_t* token) {
         printf("Executing 2DROP");
         pop_token();
         pop_token();
+    } else if (strcmp(token->text, "EMIT") == 0) {
+        token_t* numToASCII = pop_token();
+        // Check if the token is a number
+        if (numToASCII->type == NUMBER) {
+        // Convert the numeric value to an ASCII character
+        printf("Num for conversion: %s\n", numToASCII->text);
+        //Convert token text into an integer
+        int asciiValue = atoi(numToASCII->text);
+        //Convert integer into ASCII
+        char asciiChar = (char)asciiValue;
+        // Print the ASCII character
+        printf("ASCII character: %c\n", asciiChar);
     } else {
         handle_runtime_error("Unsupported Forth keyword");
     }
@@ -443,13 +455,7 @@ void createVariable(token_t* token) {
 }
 
 
-void createFunction(){
-}
-
-
-void forthREPL(){
-        //Add support for the "REPL" of FORTH
-}
+void executeFunction(token_t* token){}
 
 void executeSymbol(token_t* token){
     //Add support for custom shortcuts, ex. . to pop stack and wq to quit out forth
@@ -459,7 +465,34 @@ void executeSymbol(token_t* token){
             return;
         }
         pop_token(); // Pop the top of the stack as part of the '.' command
+    } else if (strcmp(token->text, "...") == 0) {
+        token_t* pop_operator = pop_token();
+        //int Stack_pointer = get_stack_pointer();
+        for(int i = 0; i < stack_pointer; i++){
+            pop_token();
+        }
+        stack_pointer = 0;
+
+    }
+    else if (strcmp(token->text, "man") == 0) {
+    // Pop tokens
+    token_t* checkForForth = pop_token(); //Pop Token for forth
+    printf("Popped token: %s\n", checkForForth->text); // Print popped token for debugging
+    token_t* pop_man = pop_token(); //Pop man token
+    printf("Popped token: %s\n", pop_man->text); // Print popped token for debugging
+
+    if (strcmp(checkForForth->text, "forth") == 0){
+        //Display manual page
+        printf("Manual Page for R-Forth:\n");
+        printf("1. +, -, /, *, >, <, >=, <=, !=, ==, ||, &&: To use these operators, ensure the stack is set up correctly. For example, '12 3 -' will return '-9' to the stack.\n");
+        printf("2. Forth keywords: Keywords such as DUP, DROP, ROT, 2SWAP are used similarly to the previous operators. For example, '9 32 2DUP' will return this stack '9 32 9 32'.\n");
+        printf("3. Variable Keywords: Variables work by first setting a variable using the 'VAR' keyword. For example, 'VAR pi 12' sets the variable 'pi' with the value '12' in the variable stack.\n");
+        printf("4. GET: To retrieve the value of a variable, use the 'GET' keyword. For example, 'GET pi' will push '12' to the stack if you have already inputted 'VAR pi 12'.\n");
+        printf("5. Custom symbol: Currently, the '.' symbol is supported to pop the stack.\n");
+        printf("6. Quitting: To quit the program, type and enter 'quit' or 'wq'.\n");
+    }
+    
     } else {
-        handle_runtime_error("Unsupported Symbol");
+        printf("Error: Unsupported Symbol\n");
     }
 }
