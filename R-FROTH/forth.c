@@ -1,5 +1,6 @@
 #include "token.h"
 #include "token_stack.h"
+#include "error_handling.h"
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -69,6 +70,9 @@ int main() {
         while (token_str != NULL) {
             // Create token
             token_t *new_token = create_token(WORD, token_str);
+            if (new_token == NULL) {
+                handle_memory_error();  // Custom error handling if token creation fails
+            }
 
             // Classify each token based on basic checks
             classify_token(new_token);

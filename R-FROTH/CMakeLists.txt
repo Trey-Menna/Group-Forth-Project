@@ -6,6 +6,7 @@ add_executable(
     forth.c
     token.c
     token_stack.c
+    error_handling.c
 )
 
 add_executable(
